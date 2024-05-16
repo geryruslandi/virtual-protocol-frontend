@@ -1,15 +1,16 @@
 import { useLoginQuery } from "@src/hooks/LoginQuery";
-import { LocalStorageKeys } from "@src/enums";
+import { LocalStorageKeys, PageRoutes } from "@src/enums";
 import { useState } from "react"
 import { useAppContext } from "@src/hooks/AppContext";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const loginQuery = useLoginQuery(username, password)
   const appContext = useAppContext();
+  const navigate = useNavigate()
 
 
   const submitLogin = async () => {
@@ -20,6 +21,7 @@ export const LoginPage: React.FC = () => {
     appContext.setUser(data.user)
 
     toast("Logged in", {type: 'success'})
+    navigate(PageRoutes.HOME)
   }
 
 

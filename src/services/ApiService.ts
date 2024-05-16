@@ -1,3 +1,4 @@
+import { LocalStorageKeys } from "@src/enums";
 import axios from "axios";
 
 export class ApiService {
@@ -7,7 +8,7 @@ export class ApiService {
       baseURL: import.meta.env.VITE_API_URL,
       headers: {
         Authorization: `Bearer ${
-          localStorage.getItem('jwt')
+          localStorage.getItem(LocalStorageKeys.JWT)
         }`,
         ...headers,
       },
@@ -20,5 +21,15 @@ export class ApiService {
 
   static register(dto: RegisterDTO) {
     return ApiService.httpClient().post<RegisterResponseDTO>('/auth/register', dto);
+  }
+
+  static dailyMatches() {
+    return ApiService.httpClient().get<DailyMatchResponseDTO>('/matches')
+  }
+
+  static swipe(direction: SwipeDirection, matchId: number) {
+    return ApiService.httpClient().post<MessageResponseDTO>(`/matches/${matchId}/swipe`, {
+      status: direction === 'right' ? 'like' : 'dislike'
+    })
   }
 }

@@ -6,6 +6,7 @@ type MessageResponseDTO = {message: string}
 type LabelValueType = {label: string, value: string}
 
 type UserType = {
+  id: number;
   name: string;
   gender: string;
   location: string;
@@ -35,3 +36,17 @@ type RegisterResponseDTO = MessageResponseDTO & {
     user: UserType,
   }
 }
+
+type MatchType = {
+  id: number,
+  score: number,
+  candidate: UserType
+}
+
+type DailyMatchResponseDTO = MessageResponseDTO & {
+  data: {
+    matches: MatchType[]
+  }
+}
+
+type SwipeDirection = 'left' | 'right' | 'up' | 'down'
